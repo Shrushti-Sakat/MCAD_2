@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { getSupabaseBrowserClient } from '@/lib/supabase/client';
 
 export default function AuthLayout({
@@ -10,10 +10,16 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     let isMounted = true;
     async function checkAuth() {
+      // Allow access to reset-password and forgot-password pages without redirecting
+      if (pathname?.includes('reset-password') || pathname?.includes('forgot-password')) {
+        return;
+      }
+
       const adminSession = localStorage.getItem('admin_session');
       if (adminSession) {
         if (isMounted) router.replace('/dashboard');
@@ -31,7 +37,7 @@ export default function AuthLayout({
 
     checkAuth();
     return () => { isMounted = false; };
-  }, [router]);
+  }, [router, pathname]);
 
   return <>{children}</>;
 }
