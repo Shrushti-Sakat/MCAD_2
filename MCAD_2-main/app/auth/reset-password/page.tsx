@@ -54,8 +54,26 @@ export default function ResetPasswordPage() {
     }
 
     try {
-      // In a real app, you would send this to an API endpoint to update password in Supabase
-      // For now, just show success
+      // Call API to update password in Supabase
+      const response = await fetch('/api/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          email, 
+          password, 
+          token 
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || 'Failed to reset password');
+        setIsLoading(false);
+        return;
+      }
+
       setSuccess('Password has been reset successfully! Redirecting to login...');
       setTimeout(() => {
         router.push('/auth/login');
