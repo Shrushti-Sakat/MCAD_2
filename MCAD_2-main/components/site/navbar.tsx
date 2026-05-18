@@ -74,8 +74,8 @@ export function Navbar() {
         <div className="mx-auto flex max-w-[1800px] items-center justify-between gap-4">
           <SiteLogo />
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-4 rounded-full bg-gray-50/80 px-4 py-1 border border-gray-100">
+          {/* Desktop Nav - Hidden on mobile (screens < 768px) */}
+          <nav className="hidden sm:hidden md:flex items-center gap-4 rounded-full bg-gray-50/80 px-4 py-1 border border-gray-100">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -94,9 +94,9 @@ export function Navbar() {
           </nav>
 
           {/* Right Section */}
-          <div className="flex items-center gap-3">
-            {/* Desktop Auth */}
-            <div className="hidden md:block">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Desktop Auth - Hidden on mobile */}
+            <div className="hidden sm:hidden md:block">
               {email ? (
                 <div className="relative">
                   <button
@@ -147,7 +147,7 @@ export function Navbar() {
               )}
             </div>
 
-            {/* HAMBURGER - Compact and accessible */}
+            {/* HAMBURGER - Visible only on mobile (screens < 768px) */}
             <button
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               type="button"
