@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(cat .env.local)",
-      "Bash(cat .env)",
-      "Bash(npm install *)"
-    ]
-  }
-}
