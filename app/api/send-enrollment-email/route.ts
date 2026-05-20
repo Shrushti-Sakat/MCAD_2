@@ -72,25 +72,25 @@ export async function POST(req: Request) {
       <p>Best regards,<br />M CAD Solutions Team</p>
     `;
 
-    // Send email to admin (non-blocking)
-    transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: "shrushtisakat866@gmail.com",
-      subject: `New ${titlePrefix}: ${trackName}`,
-      html: adminEmailContent,
-    }).catch((adminEmailErr) => {
-      console.error("Failed to send admin email:", adminEmailErr);
-    });
-
-    // Send confirmation email to user (non-blocking)
-    transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: `Confirmation: Your ${titlePrefix} Request`,
-      html: userEmailContent,
-    }).catch((userEmailErr) => {
-      console.error("Failed to send user email:", userEmailErr);
-    });
+    // Send emails to admin and user (blocking/awaited)
+    await Promise.all([
+      transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: "shrushtisakat866@gmail.com",
+        subject: `New ${titlePrefix}: ${trackName}`,
+        html: adminEmailContent,
+      }).catch((adminEmailErr) => {
+        console.error("Failed to send admin email:", adminEmailErr);
+      }),
+      transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: `Confirmation: Your ${titlePrefix} Request`,
+        html: userEmailContent,
+      }).catch((userEmailErr) => {
+        console.error("Failed to send user email:", userEmailErr);
+      })
+    ]);
 
     // Always return success immediately so form submission isn't blocked
     return Response.json(
