@@ -55,25 +55,25 @@ export async function POST(req: Request) {
       <p>Best regards,<br />M CAD Solutions Team</p>
     `;
 
-    // Send email to admin (non-blocking)
-    transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: "shrushtisakat866@gmail.com",
-      subject: `New ${itemType === "course" ? "Course Enrollment" : "Product Order"}: ${itemTitle}`,
-      html: adminEmailContent,
-    }).catch((adminEmailErr) => {
-      console.error("Failed to send admin email:", adminEmailErr);
-    });
-
-    // Send confirmation email to customer (non-blocking)
-    transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: userEmail,
-      subject: `Order Confirmation #${orderId}`,
-      html: customerEmailContent,
-    }).catch((customerEmailErr) => {
-      console.error("Failed to send customer email:", customerEmailErr);
-    });
+    // Send emails to admin and customer (blocking/awaited)
+    await Promise.all([
+      transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: "shrushtisakat866@gmail.com",
+        subject: `New ${itemType === "course" ? "Course Enrollment" : "Product Order"}: ${itemTitle}`,
+        html: adminEmailContent,
+      }).catch((adminEmailErr) => {
+        console.error("Failed to send admin email:", adminEmailErr);
+      }),
+      transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: userEmail,
+        subject: `Order Confirmation #${orderId}`,
+        html: customerEmailContent,
+      }).catch((customerEmailErr) => {
+        console.error("Failed to send customer email:", customerEmailErr);
+      })
+    ]);
 
     // Always return success immediately so order isn't blocked
     return Response.json(
