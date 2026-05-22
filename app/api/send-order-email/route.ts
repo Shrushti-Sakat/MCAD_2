@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     await Promise.all([
       transporter.sendMail({
         from: process.env.EMAIL_USER,
-        to: "shrushtisakat866@gmail.com",
+        to: "manojpotdar13@gmail.comm",
         subject: `New ${itemType === "course" ? "Course Enrollment" : "Product Order"}: ${itemTitle}`,
         html: adminEmailContent,
       }).catch((adminEmailErr) => {
