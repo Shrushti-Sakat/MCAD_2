@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     "STEM Education",
   ],
   metadataBase: new URL("https://mcadsolution.in"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "M CAD Solutions",
     description:
