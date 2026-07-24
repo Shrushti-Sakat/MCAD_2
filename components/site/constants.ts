@@ -17,6 +17,11 @@ export const navLinks = [
     label: "CV Analyzer",
     external: true,
   },
+  {
+    href: "https://forms.gle/CpJLzSWMzXhGL8cFA",
+    label: "ADMISSION FORM",
+    external: true,
+  },
 ] as const;
 
 export const heroStats = [
