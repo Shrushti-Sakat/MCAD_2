@@ -8,10 +8,15 @@ import {
 } from "lucide-react";
 
 export const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/courses", label: "Courses" },
-  { href: "/products", label: "Products" },
-  { href: "/about", label: "About" },
+  { href: "/", label: "Home",external: false },
+  { href: "/courses", label: "Courses",external: false },
+  { href: "/products", label: "Products",external: false },
+  { href: "/about", label: "About",external: false },
+  {
+    href: "https://cv-analyzer-alpha-eosin.vercel.app",
+    label: "CV Analyzer",
+    external: true,
+  },
 ] as const;
 
 export const heroStats = [

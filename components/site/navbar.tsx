@@ -44,17 +44,20 @@ export function Navbar() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-4 rounded-full bg-gray-50/80 px-4 py-1 border border-gray-100">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = !link.external && pathname === link.href;
+
               return (
                 <Link
                   key={link.href}
+                  href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
                   className={cn(
                     "rounded-full px-5 py-2 text-sm font-medium transition-all",
                     isActive
                       ? "bg-brand text-white shadow-sm"
-                      : "text-gray-600 hover:text-brand hover:bg-white"
+                      : "text-gray-600 hover:text-brand hover:bg-white",
                   )}
-                  href={link.href}
                 >
                   {link.label}
                 </Link>
@@ -95,23 +98,26 @@ export function Navbar() {
             "absolute top-full left-4 right-4 mt-2 bg-white rounded-[2rem] border border-gray-100 shadow-2xl p-6 transition-all duration-300 ease-out origin-top md:hidden z-[105]",
             mobileMenuOpen
               ? "translate-y-0 opacity-100 scale-100 pointer-events-auto"
-              : "-translate-y-4 opacity-0 scale-95 pointer-events-none"
+              : "-translate-y-4 opacity-0 scale-95 pointer-events-none",
           )}
           onClick={(e) => e.stopPropagation()}
         >
           <nav className="flex flex-col gap-2">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = !link.external && pathname === link.href;
+
               return (
                 <Link
                   key={link.href}
                   href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
                     "flex items-center justify-between rounded-2xl px-5 py-4 text-base font-bold transition-colors",
                     isActive
                       ? "bg-brand text-white shadow-lg shadow-brand/10"
-                      : "text-gray-600 hover:bg-gray-50"
+                      : "text-gray-600 hover:bg-gray-50",
                   )}
                 >
                   {link.label}
@@ -138,7 +144,7 @@ export function Navbar() {
           "fixed inset-0 z-[90] md:hidden transition-all duration-300",
           mobileMenuOpen
             ? "bg-black/20 pointer-events-auto backdrop-blur-[2px]"
-            : "bg-transparent pointer-events-none backdrop-blur-0"
+            : "bg-transparent pointer-events-none backdrop-blur-0",
         )}
         onClick={() => setMobileMenuOpen(false)}
       />
