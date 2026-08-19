@@ -53,8 +53,8 @@ export const metadata: Metadata = {
     images: ["/webs_logo.png"],
   },
   icons: {
-    icon: "/webs_logo.png",
-    apple: "/webs_logo.png",
+    icon: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 
